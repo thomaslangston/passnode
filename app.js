@@ -6,6 +6,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
+var fs = require("fs");
+var sqlite3 = require("sqlite3").verbose();
+
+var file = "test.db"
+var exists = fs.existsSync(file);
+
+if(!exists) {
+    console.log("Creating DB file.");
+    fs.openSync(file, "w");
+}
+
+var db = new sqlite3.Database(file);
 
 var routes = require('./routes');
 var users = require('./routes/user');
