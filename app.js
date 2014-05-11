@@ -21,6 +21,7 @@ var db = new sqlite3.Database(file);
 
 var routes = require('./routes');
 var users = require('./routes/user');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -40,6 +41,8 @@ app.use(flash());
 
 app.get('/', routes.index);
 app.get('/users', users.list);
+app.get('/login', login.login);
+app.post('/login', login.loginPost);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
