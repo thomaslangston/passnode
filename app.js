@@ -19,10 +19,6 @@ if(!exists) {
 
 var db = new sqlite3.Database(file);
 
-var routes = require('./routes');
-var users = require('./routes/user');
-var login = require('./routes/login');
-
 var app = express();
 
 // view engine setup
@@ -39,10 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 app.use(flash());
 
-app.get('/', routes.index);
-app.get('/users', users.list);
-app.get('/login', login.login);
-app.post('/login', login.loginPost);
+var routes = require('./routes')(app);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
