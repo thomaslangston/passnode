@@ -9,7 +9,7 @@ var flash = require('connect-flash');
 var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var passport = require('passport');
-var passportLocalStrat = require('passport-local').Strategy;
+var passportLocalStrategy = require('passport-local').Strategy;
 
 var dbFile = "test.db"
 var exists = fs.existsSync(dbFile);
@@ -38,6 +38,34 @@ db.serialize(function(){
 //                      
 //    stmt.finalize();
 //});
+
+//stmt.finalize();
+//  db.each("SELECT rowid AS id, thing FROM Stuff", function(err, row) {
+//          console.log(row.id + ": " + row.thing);
+//            });
+//});
+
+db.close();
+
+passport.use(new passportLocalStrategy(
+    function(email, password, done){
+        User.findOne({ email: email }, function(err, user){
+            if(err) {
+                return done(err);
+            }
+            
+            if(!user){
+                return done(null, false, { message: 'Incorrect email.' });
+            }
+            
+            if(!user.validPassword(password)){
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+
+            return done(null, user);
+        });
+    }
+));
 
 var app = express();
 
