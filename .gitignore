@@ -1,6 +1,9 @@
 # Binaries 
 bin/
 
+# vim
+*.swp
+
 # Sqlite database files
 *.db
 
