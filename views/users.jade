@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Listing of #{title} 
+
+  ul
+    each user, index in users
+        li= index + ": " + user.email + " " + user.password 
