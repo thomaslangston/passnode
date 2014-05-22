@@ -1,3 +1,4 @@
+var secrets = require('./secrets');
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -7,49 +8,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var fs = require('fs');
-var sqlite3 = require('sqlite3').verbose();
 var passport = require('passport');
 var passportLocalStrategy = require('passport-local').Strategy;
-
-var dbFile = "test.db"
-var exists = fs.existsSync(dbFile);
-
-if(!exists) {
-    console.log("Creating DB file.");
-    fs.openSync(file, "w");
-}
-
-var db = new sqlite3.Database(dbFile);
-
-db.serialize(function(){
-    if(!exists){
-        db.run("CREATE TABLE User (email TEXT, password TEXT)");
-    }
-});
-
-//var stmt = db.prepare("INSERT INTO Stuff VALUES (?)");
-  
-////Insert random data
-//var rnd;
-//    for (var i = 0; i < 10; i++) {
-//        rnd = Math.floor(Math.random() * 10000000);
-//        stmt.run("Thing #" + rnd);
-//    }
-//                      
-//    stmt.finalize();
-//});
-
-//stmt.finalize();
-//  db.each("SELECT rowid AS id, thing FROM Stuff", function(err, row) {
-//          console.log(row.id + ": " + row.thing);
-//            });
-//});
-
-db.close();
+var pg = require('pg');
+//var conString = "postgres://username:password@localhost/database";
+//use secrets.conString instead
+var sql = require('sql');
 
 passport.use(new passportLocalStrategy(
     function(email, password, done){
-        User.findOne({ email: email }, function(err, user){
+        db.user.find({ email: email }, function(err, user){
             if(err) {
                 return done(err);
             }
