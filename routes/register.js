@@ -9,7 +9,9 @@ exports.registerPost = function(req, res){
     //or if invalid password
         //put error in session
         //redirect to get 
-    
+    if(true){
+        res.redirect('/register');
+    }
     //if email already exists
         //send reset password email
     //else

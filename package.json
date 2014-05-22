@@ -17,6 +17,8 @@
     "passport": "~0.2.0",
     "connect-flash": "~0.1.1",
     "passport-local": "~1.0.0",
-    "sqlite3": "^2.2.3"
+    "sqlite3": "^2.2.3",
+    "sql": "^0.39.0",
+    "pg": "^3.2.0"
   }
 }
